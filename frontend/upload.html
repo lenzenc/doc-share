@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>doc-share &mdash; Upload Documents</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">doc-share</div>
+    <nav>
+      <a href="/upload.html" class="active">Upload</a>
+      <a href="/documents.html">My Documents</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>Upload Documents</h1>
+      <p class="subtitle">
+        Securely submit documents for your retirement planning review.
+      </p>
+
+      <form id="upload-form">
+        <label for="household_id">Household ID</label>
+        <input type="text" id="household_id" name="household_id" placeholder="e.g. H-1001" required />
+
+        <label for="files">Files</label>
+        <input type="file" id="files" name="files" multiple required
+               accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx" />
+        <p class="hint">Accepted: PDF, PNG, JPG, DOCX, XLSX. Max 25&nbsp;MB per file.</p>
+
+        <button type="submit" id="submit-btn">Upload</button>
+      </form>
+
+      <div class="results" id="results"></div>
+    </div>
+  </main>
+
+  <script src="/js/upload.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+[project]
+name = "doc-share"
+version = "0.1.0"
+description = "Client document upload portal for retirement plan setup"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "alembic>=1.18.5",
+    "boto3>=1.43.43",
+    "fastapi>=0.139.0",
+    "psycopg[binary]>=3.3.4",
+    "pydantic-settings>=2.14.2",
+    "python-multipart>=0.0.32",
+    "sqlalchemy>=2.0.51",
+    "uvicorn[standard]>=0.51.0",
+]

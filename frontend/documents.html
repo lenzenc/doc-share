@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>doc-share &mdash; My Documents</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">doc-share</div>
+    <nav>
+      <a href="/upload.html">Upload</a>
+      <a href="/documents.html" class="active">My Documents</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>My Documents</h1>
+      <p class="subtitle">Enter your household ID to view submitted documents.</p>
+
+      <form id="lookup-form" class="form-row">
+        <div>
+          <label for="household_id">Household ID</label>
+          <input type="text" id="household_id" name="household_id" placeholder="e.g. H-1001" required />
+        </div>
+        <button type="submit">View</button>
+      </form>
+
+      <div id="table-wrap"></div>
+    </div>
+  </main>
+
+  <script src="/js/documents.js"></script>
+</body>
+</html>
