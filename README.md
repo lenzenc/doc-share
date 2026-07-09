@@ -26,6 +26,18 @@ Client authentication, virus scanning, and audit logging are the next increment,
 
 **The takeaway for tech leadership:** this is what "build the MVP, not the platform" looks like in practice — a working feature in days, a clear list of what's left before production, and an architecture that doesn't have to be thrown away to get there.
 
+## Screenshots
+
+**Uploading documents** — a client enters their household ID, picks one or more files, and gets a per-file acknowledgement back:
+
+| Before submit | After submit |
+|---|---|
+| ![Upload form](docs/screenshots/upload.png) | ![Upload success](docs/screenshots/upload-success.png) |
+
+**Reviewing what's on file** — the same household ID looks up everything submitted so far, newest first, each with a download link:
+
+![Documents list](docs/screenshots/documents.png)
+
 ## Architecture
 
 - **Frontend:** static HTML/CSS/vanilla JS (`frontend/`) served by FastAPI — an upload page and a documents list page.
@@ -47,6 +59,23 @@ Then open:
 - `http://localhost:9001` — MinIO console (login with the `MINIO_ROOT_USER`/`PASSWORD` from `.env`)
 
 Run `make` (no target) or open the `Makefile` for the full list of commands (`migrate`, `revision`, `psql`, `logs`, `clean`, ...).
+
+## What gets stored in the database
+
+Postgres never holds file bytes — only one row per uploaded file in the `documents` table, pointing at where the actual object lives in MinIO:
+
+| Column | Type | Example | Notes |
+|---|---|---|---|
+| `id` | UUID (PK) | `f9d4ffbd-2a9c-...` | server-generated via `gen_random_uuid()` |
+| `household_id` | text, indexed | `H-4471` | the scoping key for every read/write |
+| `original_filename` | text | `2025-brokerage-statement-q4.pdf` | as submitted by the client, unmodified |
+| `content_type` | text | `application/pdf` | validated against the allowlist before storage |
+| `size_bytes` | bigint | `220` | validated against the 25 MB cap before storage |
+| `bucket` | text | `doc-share` | which MinIO bucket the object lives in |
+| `object_key` | text | `H-4471/f9d4ffbd-.../2025-brokerage-statement-q4.pdf` | the MinIO key; combined with `bucket`, this is what a presigned download URL resolves |
+| `uploaded_at` | timestamptz | `2026-07-09 00:26:53+00` | server-generated via `now()` |
+
+The file itself is written to MinIO under `object_key`; the row above is only ever created after that upload succeeds, so a `documents` row is a guarantee the bytes exist in object storage. Downloads never proxy through Postgres or read the file into the API process — `GET /api/documents/{id}/download` looks up the row, then 302-redirects the browser straight to a short-lived presigned MinIO URL.
 
 ## Upload rules
 
