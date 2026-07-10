@@ -33,6 +33,12 @@ class Settings(BaseSettings):
 
     presigned_url_expiry_seconds: int = 300
 
+    # If True (default), a failure to write an audit event for a read
+    # (list/download) fails the whole request rather than silently serving
+    # an unlogged access — the defensible posture for a compliance trail.
+    # Set False to fail open (serve the response, log a warning) instead.
+    audit_fail_closed: bool = True
+
     @property
     def allowed_content_types_set(self) -> set[str]:
         return {ct.strip() for ct in self.allowed_content_types.split(",") if ct.strip()}

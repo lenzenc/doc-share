@@ -194,6 +194,32 @@ td a:hover {
   padding: 16px 0;
 }
 
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge.outcome-success {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badge.outcome-error {
+  background: var(--error-bg);
+  color: var(--error);
+}
+
 .form-row {
   display: flex;
   gap: 12px;

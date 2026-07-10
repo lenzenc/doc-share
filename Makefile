@@ -1,4 +1,4 @@
-.PHONY: up down logs restart dev migrate revision psql fmt clean
+.PHONY: up down logs restart dev migrate revision psql fmt clean audit-verify
 
 up: ## Start Postgres + MinIO (infra only; API runs locally, see `make dev`)
 	docker compose up -d
@@ -30,3 +30,6 @@ fmt: ## Format the codebase (requires uv add --dev ruff)
 
 clean: ## Tear down containers and volumes (destructive: wipes db + minio data)
 	docker compose down -v
+
+audit-verify: ## Verify the audit event hash chain is intact (exits non-zero on tamper)
+	uv run python -m app.audit_verify

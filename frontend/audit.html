@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>doc-share &mdash; My Documents</title>
+  <title>doc-share &mdash; Audit Trail</title>
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
@@ -11,15 +11,18 @@
     <div class="brand">doc-share</div>
     <nav>
       <a href="/upload.html">Upload</a>
-      <a href="/documents.html" class="active">My Documents</a>
-      <a href="/audit.html">Audit Trail</a>
+      <a href="/documents.html">My Documents</a>
+      <a href="/audit.html" class="active">Audit Trail</a>
     </nav>
   </header>
 
   <main>
     <div class="card">
-      <h1>My Documents</h1>
-      <p class="subtitle">Enter your household ID to view submitted documents.</p>
+      <h1>Audit Trail</h1>
+      <p class="subtitle">
+        Every upload, list, and download recorded for a household, newest first. Each event is
+        chained to the one before it so tampering is detectable &mdash; see <code>make audit-verify</code>.
+      </p>
 
       <form id="lookup-form" class="form-row">
         <div>
@@ -33,6 +36,6 @@
     </div>
   </main>
 
-  <script src="/js/documents.js"></script>
+  <script src="/js/audit.js"></script>
 </body>
 </html>
